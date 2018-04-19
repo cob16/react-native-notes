@@ -5,7 +5,7 @@ import {
   View,
   ScrollView,
   TextInput,
-  Button,
+  TouchableOpacity,
   Alert,
   FlatList,
   ActivityIndicator,
@@ -43,7 +43,7 @@ class WebList extends Component {
       .then(response => response.json())
       .then(responseJson => {
         responseJson = responseJson.ISteamGameCoordinator;
-        var data = Object.keys(responseJson).map(function(key) {
+        var data = Object.keys(responseJson).map(function (key) {
           return { type: key, name: responseJson[key] };
         });
         this.setState(
@@ -51,7 +51,7 @@ class WebList extends Component {
             dataSource: data,
             isLoading: false,
           },
-          function() {}
+          function () { }
         );
       })
       .catch(error => {
@@ -127,7 +127,7 @@ export default class App extends Component {
             As the name implies React native tries to use the platform specific components. Meaning that your textbox will have the right android/OSX flavour to them.
           </Text>
         </View>
-
+        
         <View style={styles.container}>
           <Text style={[styles.title, styles.square]}>
             {'<Button>'}
@@ -135,13 +135,18 @@ export default class App extends Component {
           <Text style={styles.h1}>
             The same goes for buttons
           </Text>
-          <View style={styles.well}>
-            <Button title="I am a button" onPress={this._handleButtonPress} />
-            <Button
-              title="So am I"
-              color="#841584"
-              onPress={this._handleButtonPress}
-            />
+          <View>
+            <TouchableOpacity style={styles.button} onPress={this._handleButtonPress}>
+              <Text style={styles.buttonText}>
+                I am a button
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[{backroundColor: "red" }, styles.button]} onPress={this._handleButtonPress}>
+              <Text
+                style={styles.buttonText}>
+                So am I
+                </Text>
+            </TouchableOpacity>
           </View>
           <Text style={styles.h2}>
             This is your basic button. If you want something more custom you will have to make your own with the "Touchable" components.
@@ -188,7 +193,7 @@ export default class App extends Component {
           <Text style={styles.h1}>
             This List is generated from a web request
           </Text>
-          <WebList style={styles.well} itemStyle={styles.h3}/>
+          <WebList itemStyle={styles.h3} />
           <Text style={styles.h2}>
             Here we can use 'fetch()' to get the data for us.
           </Text>
